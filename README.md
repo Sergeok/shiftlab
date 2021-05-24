@@ -48,7 +48,7 @@ mvn package spring-boot:repackage
 ```
 Для запуска необходимо в директории target ввести команду с сопутствующими параметрами:
 ```
-java -jar shiftlab-1.0-SNAPSHOT.jar --spring.datasource.url=jdbc:<JDBC URL of the database> --spring.datasource.username=<username of the database> --spring.datasource.password=<password of the database>
+java -jar shiftlab-1.0-SNAPSHOT.jar --spring.datasource.url=<JDBC URL of the database> --spring.datasource.username=<username of the database> --spring.datasource.password=<password of the database>
 ```
 
 Json-формат всех свойств товаров описан следующим образом:
@@ -64,6 +64,7 @@ Json-формат всех свойств товаров описан следу
 "diagonal"        <int8>
 "capacity":       <int8>
 ```
+
 На задаваемые свойства накладываются следующие ограничения:
 * serialNumber не может повторяться в пределах продукции одного типа
 * formFactor описан перечислением и ограничен вариациями чисел от 0 до 2 (десктопы, неттопы, моноблоки)
@@ -100,13 +101,26 @@ Get-запросы на получение списка товаров по ти
 }
 ```
 
+Post-запросы на поиск товаров по серийному номеру или id в базе обрабатываются по адресам:
+* http://localhost:8080/api/pc/find
+* http://localhost:8080/api/laptop/find
+* http://localhost:8080/api/monitor/find
+* http://localhost:8080/api/hdd/find
+
+Пример тела Post-запроса на адрес "http://localhost:8080/api/monitor/find":
+```
+{
+    "serialNumber": 123
+}
+```
+
 Post-запросы на изменение товара по серийному номеру обрабатываются по адресам:
 * http://localhost:8080/api/pc/update
 * http://localhost:8080/api/laptop/update
 * http://localhost:8080/api/monitor/update
 * http://localhost:8080/api/hdd/update
 
-Пример тела Post-запроса на адрес "http://localhost:8080/api/monitor/update":
+Пример тела Post-запроса на адрес "http://localhost:8080/api/hdd/update":
 ```
 {
     "serialNumber": 123,
